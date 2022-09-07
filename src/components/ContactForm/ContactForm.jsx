@@ -3,13 +3,13 @@ import React, { Component } from 'react'
 import s from './ContactForm.module.scss'
 
 export class ContactForm extends Component {
-  static propTypes = {}
-  constructor() {
-    super();
-    this.state = {
-      name: '',
-      number: ''
-    }
+  static propTypes = {
+    onAddRecord: PropTypes.func.isRequired,
+  }
+
+  state = {
+    name: '',
+    number: ''
   }
 
   onInputChange = evt => {
@@ -17,9 +17,16 @@ export class ContactForm extends Component {
     this.setState({ [name]: value })
   }
 
+  onSubmitForm = evt => {
+    const { name, number } = this.state;
+    evt.preventDefault();
+    this.props.onAddRecord({ name, number });
+    this.setState({ name: '', number: '' })
+  }
+
   render() {
     return (
-      <form className={s.form}>
+      <form className={s.form} onSubmit={this.onSubmitForm}>
         <label>Name
           <input
             type="text"
