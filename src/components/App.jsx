@@ -45,6 +45,25 @@ export class App extends Component {
     return contacts.filter(record => record.name.toLowerCase().includes(normalizedFilter));
   }
 
+  componentDidMount() {
+    const contacts = localStorage.getItem('contacts');
+    try {
+      const parsedContacts = JSON.parse(contacts);
+      if (parsedContacts) {
+        this.setState({ contacts: parsedContacts });
+      }
+    }
+    catch (e) {
+      console.error(e.message);
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
   render() {
     const filteredContacts = this.getFilteredContacts();
     return (
