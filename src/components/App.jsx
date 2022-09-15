@@ -13,7 +13,7 @@ const initialContacts = [
   { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
 ];
 
-export function App() {
+export const App = () => {
   const [contacts, setContacts] = useLocalStorage('contacts', initialContacts);
   const [filter, setFilter] = useState('');
 

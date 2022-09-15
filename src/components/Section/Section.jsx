@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import s from './Section.module.scss'
 
-export function Section({ title, children }) {
+export const Section = ({ title, children }) => {
 
   return (
     <section>

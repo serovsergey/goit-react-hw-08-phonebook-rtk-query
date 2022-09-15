@@ -1,21 +1,18 @@
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
 import s from './Filter.module.scss'
 
-export class Filter extends Component {
-  static propTypes = {
-    value: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
-  }
+export const Filter = ({ value, onChange }) => {
 
-  render() {
-    const { value, onChange } = this.props;
-    return (
-      <label className={s.label}>Find contacts by name
-        <input type='text' value={value} onChange={onChange} />
-      </label>
-    )
-  }
+  return (
+    <label className={s.label}>Find contacts by name
+      <input type='text' value={value} onChange={onChange} />
+    </label>
+  )
+}
+
+Filter.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 }
 
 export default Filter
