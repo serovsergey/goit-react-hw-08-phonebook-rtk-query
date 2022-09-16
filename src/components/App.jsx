@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { nanoid } from "nanoid";
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import ContactForm from "./ContactForm";
@@ -35,7 +35,9 @@ export const App = () => {
   }
 
   const normalizedFilter = filter.toLowerCase();
-  const filteredContacts = contacts.filter(record => record.name.toLowerCase().includes(normalizedFilter));
+  const filteredContacts = useMemo(() => (
+    contacts.filter(record => record.name.toLowerCase().includes(normalizedFilter))
+  ), [contacts, normalizedFilter]);
 
   return (
     <main>
