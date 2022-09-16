@@ -34,10 +34,10 @@ export const App = () => {
     setFilter(evt.currentTarget.value)
   }
 
-  const normalizedFilter = filter.toLowerCase();
-  const filteredContacts = useMemo(() => (
-    contacts.filter(record => record.name.toLowerCase().includes(normalizedFilter))
-  ), [contacts, normalizedFilter]);
+  const filteredContacts = useMemo(() => {
+    const normalizedFilter = filter.toLowerCase();
+    return contacts.filter(record => record.name.toLowerCase().includes(normalizedFilter))
+  }, [contacts, filter]);
 
   return (
     <main>
