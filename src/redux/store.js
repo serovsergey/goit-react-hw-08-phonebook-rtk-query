@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { itemsSlice } from './itemsSlice/slice';
-import { filterSlice } from './filterSlice/slice';
+import { itemsSlice } from './itemsSlice/slice.items';
+import { filterSlice } from './filterSlice/slice.filter';
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 

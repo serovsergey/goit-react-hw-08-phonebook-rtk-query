@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, getItems } from 'redux/itemsSlice/slice';
+import { addItem, getItems } from 'redux/itemsSlice/slice.items';
 // import PropTypes from 'prop-types'
 import s from './ContactForm.module.scss'
 
