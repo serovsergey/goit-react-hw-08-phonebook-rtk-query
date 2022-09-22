@@ -4,8 +4,6 @@ import { filterSlice } from './filterSlice/slice';
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 
-// import rootReducer from './reducers'
-
 const persistConfig = {
   key: 'contacts',
   storage,
