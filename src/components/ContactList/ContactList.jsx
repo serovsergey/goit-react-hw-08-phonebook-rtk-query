@@ -1,8 +1,8 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 // import PropTypes from 'prop-types'
 import s from './ContactList.module.scss'
-import { deleteItem, getItems, readItemsFromStorage } from '../../redux/itemsSlice/slice';
+import { deleteItem, getItems } from '../../redux/itemsSlice/slice';
 
 export const ContactList = () => {
   const contacts = useSelector(getItems);
@@ -12,9 +12,9 @@ export const ContactList = () => {
     dispatch(deleteItem(id));
   }
 
-  useEffect(() => {
-    dispatch(readItemsFromStorage());
-  }, [dispatch])
+  // useEffect(() => {
+  //   dispatch(readItemsFromStorage());
+  // }, [dispatch])
 
   const filteredContacts = useMemo(() => {
     const normalizedFilter = filter.toLowerCase();

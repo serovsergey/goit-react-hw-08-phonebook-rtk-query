@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem } from 'redux/itemsSlice/slice';
+import { addItem, getItems } from 'redux/itemsSlice/slice';
 // import PropTypes from 'prop-types'
 import s from './ContactForm.module.scss'
 
@@ -10,7 +10,7 @@ export const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const formFields = { name: setName, number: setNumber };
-  const contacts = useSelector(state => state.items);
+  const contacts = useSelector(getItems);
   const dispatch = useDispatch();
   const onInputChange = evt => {
     const { name, value } = evt.currentTarget;
