@@ -1,13 +1,17 @@
-import PropTypes from 'prop-types'
+import { nanoid } from 'nanoid';
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem } from 'redux/itemsSlice/slice';
+// import PropTypes from 'prop-types'
 import s from './ContactForm.module.scss'
 
-export const ContactForm = ({ onAddRecord }) => {
+export const ContactForm = () => {
 
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const formFields = { name: setName, number: setNumber };
-
+  const contacts = useSelector(state => state.items);
+  const dispatch = useDispatch();
   const onInputChange = evt => {
     const { name, value } = evt.currentTarget;
     formFields[name](value);
@@ -15,7 +19,12 @@ export const ContactForm = ({ onAddRecord }) => {
 
   const onSubmitForm = evt => {
     evt.preventDefault();
-    onAddRecord({ name, number });
+    const searchingName = name.toLowerCase();
+    if (contacts.some(item => item.name.toLowerCase() === searchingName)) {
+      alert(`${name} is already in contacts.`);
+      return;
+    }
+    dispatch(addItem({ id: nanoid(), name, number }));
     Object.values(formFields).forEach(setField => setField(''));
   }
 
@@ -48,8 +57,6 @@ export const ContactForm = ({ onAddRecord }) => {
   )
 }
 
-ContactForm.propTypes = {
-  onAddRecord: PropTypes.func.isRequired,
-}
+// ContactForm.propTypes = {}
 
 export default ContactForm

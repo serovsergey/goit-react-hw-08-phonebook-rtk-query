@@ -4,11 +4,9 @@ import s from './Section.module.scss'
 export const Section = ({ title, children }) => {
 
   return (
-    <section>
-      <div className={s.container}>
-        {title && <h2>{title}</h2>}
-        {children}
-      </div >
+    <section className={s.container}>
+      {title && <h2>{title}</h2>}
+      {children}
     </section>
   )
 }
