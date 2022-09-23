@@ -2,14 +2,14 @@ import { useMemo } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 // import PropTypes from 'prop-types'
 import s from './ContactList.module.scss'
-import { deleteItem, getItems } from '../../redux/itemsSlice/slice.items';
+import { deleteItemAction, getItems } from '../../redux/itemsSlice/slice.items';
 
 export const ContactList = () => {
   const contacts = useSelector(getItems);
   const filter = useSelector(state => state.filter);
   const dispatch = useDispatch();
   const handleDeleteItem = (id) => {
-    dispatch(deleteItem(id));
+    dispatch(deleteItemAction(id));
   }
 
   // useEffect(() => {

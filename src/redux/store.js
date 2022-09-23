@@ -9,11 +9,11 @@ const persistConfig = {
   storage,
 }
 
-const persistedReducer = persistReducer(persistConfig, itemsSlice.reducer)
+const persistedItemsReducer = persistReducer(persistConfig, itemsSlice.reducer)
 
 export const store = configureStore({
   reducer: {
-    items: persistedReducer,
+    items: persistedItemsReducer,
     filter: filterReducer,
   },
   middleware(getDefaultMiddleware) {
@@ -23,6 +23,7 @@ export const store = configureStore({
       },
     });
   },
+  devTools: process.env.NODE_ENV === 'development',
 })
 
 export const persistor = persistStore(store);

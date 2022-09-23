@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAction, createSlice } from "@reduxjs/toolkit";
+import { nanoid } from "nanoid";
 import { initialContacts } from "./initial-state.items";
 
 // const STORAGE_KEY = 'contacts';
@@ -16,6 +17,10 @@ import { initialContacts } from "./initial-state.items";
 //   localStorage.setItem(key, JSON.stringify(value))
 // }
 
+export const addItemAction = createAction('items/addItem', item => (
+  { payload: { ...item, id: nanoid() } }
+));
+
 export const itemsSlice = createSlice({
   name: 'items',
   initialState: { items: initialContacts },
@@ -26,18 +31,21 @@ export const itemsSlice = createSlice({
     //     return storedItems ?? state;
     //   }
     // },
-    addItem(state, action) {
-      state.items.push(action.payload);
-      // writeArrayToStorage(STORAGE_KEY, state)
-    },
-    deleteItem(state, action) {
+
+    deleteItemAction(state, action) {
       state.items = state.items.filter(item => action.payload !== item.id);
       // writeArrayToStorage(STORAGE_KEY, state);
       return state;
     },
+  },
+  extraReducers: {
+    [addItemAction]: (state, action) => {
+      state.items.push(action.payload);
+      // writeArrayToStorage(STORAGE_KEY, state)
+    },
   }
 });
 
-export const { addItem, deleteItem, readItemsFromStorage } = itemsSlice.actions;
+export const { deleteItemAction } = itemsSlice.actions;
 
 export const getItems = state => state.items.items;

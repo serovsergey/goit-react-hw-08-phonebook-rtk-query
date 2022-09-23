@@ -1,7 +1,6 @@
-import { nanoid } from 'nanoid';
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, getItems } from 'redux/itemsSlice/slice.items';
+import { addItemAction, getItems } from 'redux/itemsSlice/slice.items';
 // import PropTypes from 'prop-types'
 import s from './ContactForm.module.scss'
 
@@ -24,7 +23,7 @@ export const ContactForm = () => {
       alert(`${name} is already in contacts.`);
       return;
     }
-    dispatch(addItem({ id: nanoid(), name, number }));
+    dispatch(addItemAction({ name, number }));
     Object.values(formFields).forEach(setField => setField(''));
   }
 
