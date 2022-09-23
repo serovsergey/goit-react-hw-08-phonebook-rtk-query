@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
+import { setFilterAction } from 'redux/filterReducer/actions.filter';
 // import PropTypes from 'prop-types'
-import { setFilter } from '../../redux/filterSlice/slice.filter';
 import s from './Filter.module.scss'
 
 export const Filter = () => {
@@ -8,7 +8,7 @@ export const Filter = () => {
   const dispatch = useDispatch();
 
   const handleChange = evt => {
-    dispatch(setFilter(evt.currentTarget.value));
+    dispatch(setFilterAction(evt.currentTarget.value));
   }
 
   return (
