@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { addItemAction, getItems } from 'redux/itemsSlice/slice.items';
+import { getItems } from 'redux/itemsSlice/selector.items';
+import { addItemAction } from 'redux/itemsSlice/slice.items';
 // import PropTypes from 'prop-types'
 import s from './ContactForm.module.scss'
 
