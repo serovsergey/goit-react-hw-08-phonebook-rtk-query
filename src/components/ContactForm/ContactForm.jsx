@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getItems } from 'redux/itemsSlice/selector.items';
-import { addItemAction } from 'redux/itemsSlice/slice.items';
+import { addContact } from 'redux/contactsSlice/operations.contacts';
+import { getContacts } from 'redux/contactsSlice/selector.contacts';
 // import PropTypes from 'prop-types'
 import s from './ContactForm.module.scss'
 
@@ -10,7 +10,7 @@ export const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const formFields = { name: setName, number: setNumber };
-  const contacts = useSelector(getItems);
+  const { items } = useSelector(getContacts);
   const dispatch = useDispatch();
   const onInputChange = evt => {
     const { name, value } = evt.currentTarget;
@@ -20,11 +20,11 @@ export const ContactForm = () => {
   const onSubmitForm = evt => {
     evt.preventDefault();
     const searchingName = name.toLowerCase();
-    if (contacts.some(item => item.name.toLowerCase() === searchingName)) {
+    if (items.some(item => item.name.toLowerCase() === searchingName)) {
       alert(`${name} is already in contacts.`);
       return;
     }
-    dispatch(addItemAction({ name, number }));
+    dispatch(addContact({ name, number }));
     Object.values(formFields).forEach(setField => setField(''));
   }
 
