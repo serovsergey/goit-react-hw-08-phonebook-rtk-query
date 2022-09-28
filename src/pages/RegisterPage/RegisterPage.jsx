@@ -28,9 +28,9 @@ const RegisterPage = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: 'sergey',
-      email: '@gmail.com',
-      password: '11111111',
+      name: '',
+      email: '',
+      password: '',
     },
     validationSchema,
     onSubmit: values => {

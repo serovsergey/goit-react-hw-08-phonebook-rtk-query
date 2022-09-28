@@ -27,8 +27,10 @@ const LoginPage = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: 'serovsergey79@gmail.com',
-      password: 'ssa260579',
+      // email: 'serovsergey79@gmail.com',
+      // password: 'ssa260579',
+      email: '',
+      password: '',
     },
     validationSchema,
     onSubmit: (values, { resetForm }) => {
