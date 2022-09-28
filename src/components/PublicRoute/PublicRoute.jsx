@@ -9,6 +9,9 @@ const PublicRoute = ({ restricted = false, redirectTo = '/contacts' }) => {
   return isLoggedIn && restricted ? <Navigate to={redirectTo}></Navigate> : <Outlet />
 };
 
-PublicRoute.propTypes = {};
+PublicRoute.propTypes = {
+  restricted: PropTypes.bool,
+  redirectTo: PropTypes.string,
+};
 
 export default PublicRoute;

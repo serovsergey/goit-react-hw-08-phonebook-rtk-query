@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Button, Paper, TextField, Typography } from '@mui/material';
@@ -8,7 +8,7 @@ import s from './register.module.scss';
 import { useDispatch } from 'react-redux';
 import authOperations from 'redux/auth/operations.auth';
 
-const Register = (props) => {
+const Register = () => {
   const dispatch = useDispatch();
 
   const validationSchema = yup.object({
@@ -82,6 +82,6 @@ const Register = (props) => {
   )
 };
 
-Register.propTypes = {};
+// Register.propTypes = {};
 
 export default Register;

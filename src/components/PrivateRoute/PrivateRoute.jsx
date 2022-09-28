@@ -9,6 +9,8 @@ const PrivateRoute = ({ redirectTo = '/' }) => {
   return isLoggedIn ? <Outlet /> : <Navigate to={redirectTo}></Navigate>
 };
 
-PrivateRoute.propTypes = {};
+PrivateRoute.propTypes = {
+  redirectTo: PropTypes.string,
+};
 
 export default PrivateRoute;

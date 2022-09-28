@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import ContactList from 'components/ContactList';
 import { Button } from '@mui/material';
 import Modal from '../../components/shared/Modal';
@@ -10,7 +10,7 @@ import { addContact } from 'redux/contactsSlice/operations.contacts';
 
 // import s from './Contacts.module.scss';
 
-const Contacts = (props) => {
+const Contacts = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const items = useSelector(getContactsItems);
   const dispatch = useDispatch();
@@ -42,6 +42,6 @@ const Contacts = (props) => {
   )
 };
 
-Contacts.propTypes = {};
+// Contacts.propTypes = {};
 
 export default Contacts;

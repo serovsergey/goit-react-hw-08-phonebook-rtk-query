@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 // import s from './Home.module.scss';
 
-const Home = (props) => {
+const Home = () => {
 
   return (
     <div>
@@ -12,6 +12,6 @@ const Home = (props) => {
   )
 };
 
-Home.propTypes = {};
+// Home.propTypes = {};
 
 export default Home;

@@ -1,8 +1,5 @@
 import { Paper, Typography } from '@mui/material';
 import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/contactsSlice/operations.contacts';
-import { getContacts } from 'redux/contactsSlice/selector.contacts';
 // import PropTypes from 'prop-types'
 import s from './ContactForm.module.scss'
 

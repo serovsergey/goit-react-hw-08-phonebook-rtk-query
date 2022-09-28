@@ -1,12 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 import s from './authNav.module.scss';
 import { Box } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 const getLinkClassName = ({ isActive }) => s.link + (isActive ? " " + s.active : "");
 
-const AuthNav = (props) => {
+const AuthNav = () => {
 
   return (
     <Box>
@@ -18,6 +18,6 @@ const AuthNav = (props) => {
   )
 };
 
-AuthNav.propTypes = {};
+// AuthNav.propTypes = {};
 
 export default AuthNav;

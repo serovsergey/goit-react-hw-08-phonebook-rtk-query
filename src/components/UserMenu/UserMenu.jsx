@@ -1,6 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+// import PropTypes from 'prop-types';
 
 import s from './userMenu.module.scss';
 import { Box, Button } from '@mui/material';
@@ -9,7 +8,7 @@ import authSelectors from 'redux/auth/selector.auth';
 import authOperations from 'redux/auth/operations.auth';
 
 
-const UserMenu = (props) => {
+const UserMenu = () => {
   const username = useSelector(authSelectors.getUserName);
   const dispatch = useDispatch();
   const handleLogout = () => {
@@ -24,6 +23,6 @@ const UserMenu = (props) => {
   )
 };
 
-UserMenu.propTypes = {};
+// UserMenu.propTypes = {};
 
 export default UserMenu;

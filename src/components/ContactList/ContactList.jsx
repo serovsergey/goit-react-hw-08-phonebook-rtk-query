@@ -5,7 +5,6 @@ import s from './ContactList.module.scss'
 import { getContactsError, getContactsIsLoading, getContactsItems } from 'redux/contactsSlice/selector.contacts';
 import { getFilter } from 'redux/filterReducer/selector.filter';
 import { fetchAllContacts } from 'redux/contactsSlice/operations.contacts';
-import ContactForm from 'components/ContactForm';
 import ContactItem from 'components/ContactItem';
 import { LinearProgress } from '@mui/material';
 
