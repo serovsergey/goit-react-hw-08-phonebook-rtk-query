@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Card, IconButton } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { Card, CircularProgress, IconButton } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteContact, editContact } from 'redux/contactsSlice/operations.contacts';
 import ContactForm from 'components/ContactForm';
 import Modal from '../../components/shared/Modal';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import s from './contactItem.module.scss';
+import { getContactsIsLoading } from 'redux/contactsSlice/selector.contacts';
 
 const ContactItem = ({ id, name, number }) => {
   const dispatch = useDispatch();
+  const isLoading = useSelector(getContactsIsLoading);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const deletingId = useRef(null);
 
   const handleDeleteItem = () => {
+    deletingId.current = id;
     dispatch(deleteContact(id));
   }
 
@@ -22,10 +26,12 @@ const ContactItem = ({ id, name, number }) => {
   }
 
   const handleSubmit = (item) => {
-    dispatch(editContact({ ...item, id }));
+    if (item.name !== name || item.number !== number) {
+      dispatch(editContact({ ...item, id }));
+    }
     setIsModalOpen(false);
   }
-
+  const isDeleting = isLoading && deletingId.current === id;
   return (
     <>
       <Card sx={{
@@ -41,7 +47,7 @@ const ContactItem = ({ id, name, number }) => {
         </div>
         <div>
           <IconButton onClick={toggleModal} aria-label="edit"><EditIcon /></IconButton >
-          <IconButton onClick={handleDeleteItem} aria-label="delete"><DeleteForeverIcon /></IconButton >
+          <IconButton onClick={handleDeleteItem} aria-label="delete" disabled={isDeleting}>{isDeleting ? <CircularProgress size={24} /> : <DeleteForeverIcon />}</IconButton >
         </div>
       </Card >
       {isModalOpen && (

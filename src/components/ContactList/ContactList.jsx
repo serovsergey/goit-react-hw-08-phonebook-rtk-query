@@ -53,8 +53,7 @@ export const ContactList = () => {
             </Box>
           ))}
         </div >
-        {error && <p>{error}</p>}
-
+        {!isLoading && error && <p>{error}</p>}
       </Box >
     </>
   )
