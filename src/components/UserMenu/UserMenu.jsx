@@ -1,7 +1,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 
-import s from './userMenu.module.scss';
+// import s from './userMenu.module.scss';
 import { Box, Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import authSelectors from 'redux/auth/selector.auth';
