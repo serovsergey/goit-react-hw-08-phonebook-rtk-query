@@ -6,7 +6,7 @@ import { getContactsError, getContactsIsLoading, getContactsItems } from 'redux/
 import { getFilter } from 'redux/filterReducer/selector.filter';
 import { fetchAllContacts } from 'redux/contactsSlice/operations.contacts';
 import ContactItem from 'components/ContactItem';
-import { LinearProgress } from '@mui/material';
+import { Box, LinearProgress, Typography } from '@mui/material';
 
 export const ContactList = () => {
   const items = useSelector(getContactsItems);
@@ -21,20 +21,41 @@ export const ContactList = () => {
 
   const filteredContacts = useMemo(() => {
     const normalizedFilter = filter.toLowerCase();
-    return items.filter(record => record.name.toLowerCase().includes(normalizedFilter))
+    // return items.filter(record => record.name.toLowerCase().includes(normalizedFilter))
+    return [...items]
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .reduce((acc, item) => {
+        if (!item.name.toLowerCase().includes(normalizedFilter)) {
+          return acc;
+        }
+        else {
+          const firstLetter = item.name[0].toUpperCase();
+          return { ...acc, [firstLetter]: (acc[firstLetter] ? [...acc[firstLetter], item] : [item]) }
+        }
+      }, {});
   }, [items, filter]);
 
   return (
     <>
       {isLoading && <LinearProgress />}
-      <div className={s.list}>
-        {filteredContacts.map(({ id, name, number }) => (
-          <ContactItem key={id} id={id} name={name} number={number} />
-        ))}
-      </div>
-      {isLoading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
+      <Box sx={{
+        columnWidth: "16em",
+      }}>
+        <div className={s.list}>
+          {Object.keys(filteredContacts).map(letter => (
+            <Box key={letter} sx={{ breakInside: "avoid-column" }}>
+              <Typography variant='h5'> {letter}</Typography>
+              {
+                filteredContacts[letter].map(({ id, name, number }) => (
+                  <ContactItem key={id} id={id} name={name} number={number} />
+                ))
+              }
+            </Box>
+          ))}
+        </div >
+        {error && <p>{error}</p>}
 
+      </Box >
     </>
   )
 }

@@ -1,8 +1,9 @@
+import { Paper, TextField } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux'
 import { setFilterAction } from 'redux/filterReducer/actions.filter';
 import { getFilter } from 'redux/filterReducer/selector.filter';
 // import PropTypes from 'prop-types'
-import s from './Filter.module.scss'
+// import s from './Filter.module.scss'
 
 export const Filter = () => {
   const filter = useSelector(getFilter);
@@ -13,11 +14,16 @@ export const Filter = () => {
   }
 
   return (
-    <div>
-      <label className={s.label}>Filter contacts by name
-        <input type='text' value={filter} onChange={handleChange} />
-      </label>
-    </div>
+    <Paper>
+      <TextField
+        fullWidth
+        id="filter"
+        name="filter"
+        label="Filter contacts by name"
+        value={filter}
+        onChange={handleChange}
+      />
+    </Paper>
 
   )
 }

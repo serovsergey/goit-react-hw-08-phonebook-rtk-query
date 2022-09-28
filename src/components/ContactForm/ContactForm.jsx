@@ -1,64 +1,76 @@
-import { Paper, Typography } from '@mui/material';
-import { useState } from 'react'
-// import PropTypes from 'prop-types'
+import { Button, TextField, Typography } from '@mui/material';
+import PropTypes from 'prop-types'
+import * as yup from 'yup';
 import s from './ContactForm.module.scss'
+import { useFormik } from 'formik';
 
-export const ContactForm = ({ onSubmit, initialData = null }) => {
+// const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+const phoneRegExp = /^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,3})|(\(?\d{2,3}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/
+const validationSchema = yup.object({
+  name: yup
+    .string('Enter contact name')
+    .required('Name is required'),
+  number: yup
+    .string('Enter phone number')
+    .matches(phoneRegExp, 'Phone number is not valid')
+    .required('Number is required'),
+});
 
-  const [name, setName] = useState(initialData?.name ?? '');
-  const [number, setNumber] = useState(initialData?.number ?? '');
-  const formFields = { name: setName, number: setNumber };
-  // const { items } = useSelector(getContacts);
-  // const dispatch = useDispatch();
-  const onInputChange = evt => {
-    const { name, value } = evt.currentTarget;
-    formFields[name](value);
-  }
-
-  const onSubmitForm = evt => {
-    evt.preventDefault();
-    onSubmit({ name, number });
-    // const searchingName = name.toLowerCase();
-    // if (items.some(item => item.name.toLowerCase() === searchingName)) {
-    //   alert(`${name} is already in contacts.`);
-    //   return;
-    // }
-    // dispatch(addContact({ name, number }));
-    Object.values(formFields).forEach(setField => setField(''));
-  }
+export const ContactForm = ({ onSubmit, onClose, initialData = null }) => {
+  const formik = useFormik({
+    initialValues: {
+      name: initialData?.name ?? '',
+      number: initialData?.number ?? '',
+    },
+    validationSchema,
+    onSubmit: (values, { resetForm }) => {
+      onSubmit(values);
+      resetForm();
+    },
+  });
 
   return (
-    <Paper elevation={4}>
-      <Typography>{initialData ? 'Edit contact' : 'New contact'}</Typography>
-      <form className={s.form} onSubmit={onSubmitForm}>
-        <label>Name
-          <input
-            type="text"
-            name="name"
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-            value={name}
-            onChange={onInputChange}
-          />
-        </label>
-        <label>Number
-          <input
-            type="tel"
-            name="number"
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-            value={number}
-            onChange={onInputChange}
-          />
-        </label>
-        <button type='submit'>{initialData ? 'Save' : 'Add'}</button>
+    <>
+      <Typography variant='h5'>{initialData ? 'Edit contact' : 'New contact'}</Typography>
+      <form onSubmit={formik.handleSubmit} className={s.form}>
+        <TextField
+          fullWidth
+          id="name"
+          name="name"
+          label="Contact Name"
+          value={formik.values.name}
+          onChange={formik.handleChange}
+          error={formik.touched.name && Boolean(formik.errors.name)}
+          helperText={formik.touched.name && formik.errors.name}
+        />
+        <TextField
+          fullWidth
+          id="number"
+          name="number"
+          label="Phone Number"
+          type="text"
+          value={formik.values.number}
+          onChange={formik.handleChange}
+          error={formik.touched.number && Boolean(formik.errors.number)}
+          helperText={formik.touched.number && formik.errors.number}
+        />
+        <Button color="primary" variant="contained" type="submit">
+          {initialData ? 'Save' : 'Add'}
+          {/* Login {isLoading && <CircularProgress size={24} />} */}
+        </Button>
+        <Button type='button' onClick={onClose}>Cancel</Button>
       </form>
-    </Paper>
+    </>
   )
 }
 
-// ContactForm.propTypes = {}
+ContactForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  initialData: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    number: PropTypes.string.isRequired,
+  })])
+}
 
 export default ContactForm

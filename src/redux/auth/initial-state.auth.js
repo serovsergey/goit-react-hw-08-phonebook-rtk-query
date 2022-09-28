@@ -4,4 +4,5 @@ export const initialState = {
   isLoggedIn: false,
   isLoading: false,
   error: null,
+  isFetchingCurrentUser: false,
 }

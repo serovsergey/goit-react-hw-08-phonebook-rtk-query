@@ -1,9 +1,9 @@
-.container {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 16px;
-  padding-bottom: 16px;
-}
+// .container {
+//   max-width: 960px;
+//   margin: 0 auto;
+//   padding: 16px;
+//   padding-bottom: 16px;
+// }
 
 .header {
   display: flex;
@@ -20,7 +20,9 @@
 }
 
 .logo {
-  font-size: 24px;
+  display: flex;
+  align-items: center;
+  // font-size: 36px;
   font-weight: 700;
   margin: 0;
 }
@@ -36,4 +38,11 @@
     color: white;
     background-color: orangered;
   }
+}
+
+.logoImg {
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  margin-right: 8px;
 }

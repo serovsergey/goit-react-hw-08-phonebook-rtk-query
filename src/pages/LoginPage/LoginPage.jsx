@@ -4,15 +4,14 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Button, CircularProgress, Paper, TextField, Typography } from '@mui/material';
 
-import s from './login.module.scss';
+import s from './loginPage.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import authOperations from 'redux/auth/operations.auth';
-import { useNavigate } from 'react-router-dom';
 import authSelectors from 'redux/auth/selector.auth';
+import { toast } from 'react-toastify';
 
-const Login = () => {
+const LoginPage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const isLoading = useSelector(authSelectors.getIsLoading);
 
   const validationSchema = yup.object({
@@ -34,11 +33,11 @@ const Login = () => {
     validationSchema,
     onSubmit: (values, { resetForm }) => {
       dispatch(authOperations.login(values)).unwrap()
-        .then(() => navigate('/contacts', { replace: true }));
-      // console.log(resetForm)
-      resetForm({});
+        .catch((error) => toast.error(`Login failed with message: \n${error.message}`));
+      // resetForm();
     },
   });
+
 
   return (
     <Paper elevation={4} className={s.container}>
@@ -75,6 +74,6 @@ const Login = () => {
   )
 };
 
-// Login.propTypes = {};
+// LoginPage.propTypes = {};
 
-export default Login;
+export default LoginPage;

@@ -41,6 +41,7 @@ const getCurrentUser = createAsyncThunk('auth/getCurrentUser', async (_, { rejec
     const data = await authAPI.getCurrentUser();
     return data;
   } catch (error) {
+    clearToken();
     return rejectWithValue({ message: error.message, status: error.response.status })
   }
 })

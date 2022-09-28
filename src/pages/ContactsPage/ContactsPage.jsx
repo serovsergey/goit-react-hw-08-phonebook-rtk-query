@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
 import ContactList from 'components/ContactList';
-import { Button } from '@mui/material';
+import { Button, Paper } from '@mui/material';
 import Modal from '../../components/shared/Modal';
 import ContactForm from 'components/ContactForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContactsItems } from 'redux/contactsSlice/selector.contacts';
 import { addContact } from 'redux/contactsSlice/operations.contacts';
+import Filter from 'components/Filter';
 
-// import s from './Contacts.module.scss';
+// import s from './contactsPage.module.scss';
 
-const Contacts = () => {
+const ContactsPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const items = useSelector(getContactsItems);
   const dispatch = useDispatch();
@@ -30,18 +31,21 @@ const Contacts = () => {
   }
 
   return (
-    <div>
-      <Button onClick={toggleModal}>Add contact</Button>
+    <>
+      <Button sx={{ display: 'block', marginLeft: 'auto' }} onClick={toggleModal}>Add contact</Button>
+      <Filter />
       {isModalOpen && (
         <Modal onClose={toggleModal}>
-          <ContactForm onSubmit={handleSubmit} />
+          <ContactForm onSubmit={handleSubmit} onClose={toggleModal} />
         </Modal>
       )}
-      <ContactList />
-    </div>
+      <Paper elevation={0} sx={{ marginTop: 1 }}>
+        <ContactList />
+      </Paper>
+    </>
   )
 };
 
-// Contacts.propTypes = {};
+// ContactsPage.propTypes = {};
 
-export default Contacts;
+export default ContactsPage;

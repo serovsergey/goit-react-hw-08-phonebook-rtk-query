@@ -4,11 +4,12 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Button, Paper, TextField, Typography } from '@mui/material';
 
-import s from './register.module.scss';
+import s from './registerPage.module.scss';
 import { useDispatch } from 'react-redux';
 import authOperations from 'redux/auth/operations.auth';
+import { toast } from 'react-toastify';
 
-const Register = () => {
+const RegisterPage = () => {
   const dispatch = useDispatch();
 
   const validationSchema = yup.object({
@@ -33,7 +34,9 @@ const Register = () => {
     },
     validationSchema,
     onSubmit: values => {
-      dispatch(authOperations.register(values))
+      dispatch(authOperations.register(values)).unwrap()
+        .then(() => toast.info('You have registered!'))
+        .catch((error) => toast.error(`Failed to register with error: \n${error.message}`));
     },
   });
 
@@ -82,6 +85,6 @@ const Register = () => {
   )
 };
 
-// Register.propTypes = {};
+// RegisterPage.propTypes = {};
 
-export default Register;
+export default RegisterPage;

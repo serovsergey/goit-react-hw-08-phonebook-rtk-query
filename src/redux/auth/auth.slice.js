@@ -43,13 +43,20 @@ const authSlice = createSlice({
     },
     [authOperations.logout.rejected]: setError,
 
-    [authOperations.getCurrentUser.pending]: setPending,
+    [authOperations.getCurrentUser.pending]: state => {
+      setPending(state);
+      state.isFetchingCurrentUser = true;
+    },
     [authOperations.getCurrentUser.fulfilled]: (state, { payload }) => {
       state.user = payload;
       state.isLoggedIn = true;
       state.isLoading = false;
+      state.isFetchingCurrentUser = false;
     },
-    [authOperations.getCurrentUser.rejected]: setError,
+    [authOperations.getCurrentUser.rejected]: (state, action) => {
+      setError(state, action);
+      state.isFetchingCurrentUser = false;
+    },
   },
 })
 
