@@ -31,7 +31,7 @@ export const ContactForm = ({ onSubmit, onClose, initialData = null }) => {
 
   return (
     <>
-      <Typography variant='h5'>{initialData ? 'Edit contact' : 'New contact'}</Typography>
+      <Typography component={'h2'} variant={'h4'} align={'center'}>{initialData ? 'Edit contact' : 'New contact'}</Typography>
       <form onSubmit={formik.handleSubmit} className={s.form}>
         <TextField
           fullWidth

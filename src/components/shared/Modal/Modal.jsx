@@ -32,7 +32,7 @@ export const Modal = ({ onClose, children }) => {
   }
 
   return createPortal((
-    <div className={s.Overlay} onClick={handleBackDropClick}>
+    <div className={s.Overlay} onMouseDown={handleBackDropClick}>
       <Paper elevation={4} className={s.Modal}>
         {children}
       </Paper>
