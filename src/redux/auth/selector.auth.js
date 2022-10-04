@@ -11,7 +11,6 @@ const getIsLoading = state => state.auth.isLoading;
 
 const getError = state => state.auth.error;
 
-
 const authSelectors = { getIsLoggedIn, getToken, getUserName, getUserEmail, getIsFetchingCurrentUser, getIsLoading, getError };
 
 export default authSelectors;
