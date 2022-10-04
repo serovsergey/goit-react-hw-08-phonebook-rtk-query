@@ -5,14 +5,14 @@ import * as yup from 'yup';
 import { Button, CircularProgress, Paper, TextField, Typography } from '@mui/material';
 
 import s from './loginPage.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import authOperations from 'redux/auth/operations.auth';
-import authSelectors from 'redux/auth/selector.auth';
-import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { setCredentials } from 'redux/auth/auth.slice';
+import { useLoginMutation } from 'services/contacts.api';
 
 const LoginPage = () => {
+  const [login, { isLoading }] = useLoginMutation();
   const dispatch = useDispatch();
-  const isLoading = useSelector(authSelectors.getIsLoading);
+  // const isLoading = useSelector(authSelectors.getIsLoading);
 
   const validationSchema = yup.object({
     email: yup
@@ -34,8 +34,13 @@ const LoginPage = () => {
     },
     validationSchema,
     onSubmit: (values, { resetForm }) => {
-      dispatch(authOperations.login(values)).unwrap()
-        .catch((error) => toast.error(`Login failed with message: \n${error.message}`));
+      login(values).unwrap()
+        .then((user) => {
+          dispatch(setCredentials(user));
+        })
+
+      // dispatch(authOperations.login(values)).unwrap()
+      //   .catch((error) => toast.error(`Login failed with message: \n${error.message}`));
       // resetForm();
     },
   });
@@ -69,7 +74,7 @@ const LoginPage = () => {
           helperText={formik.touched.password && formik.errors.password}
         />
         <Button color="primary" variant="contained" type="submit" disabled={isLoading}>
-          Login {isLoading && <CircularProgress size={24} />}
+          Login &nbsp; {isLoading && <CircularProgress size={24} />}
         </Button>
       </form>
     </Paper>

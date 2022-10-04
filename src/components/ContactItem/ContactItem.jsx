@@ -1,24 +1,24 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Card, CircularProgress, IconButton } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact, editContact } from 'redux/contactsSlice/operations.contacts';
 import ContactForm from 'components/ContactForm';
 import Modal from '../../components/shared/Modal';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import s from './contactItem.module.scss';
-import { getContactsIsLoading } from 'redux/contactsSlice/selector.contacts';
+import { useDeleteContactMutation, useGetContactsQuery, useUpdateContactMutation } from 'services/contacts.api';
 
 const ContactItem = ({ id, name, number }) => {
-  const dispatch = useDispatch();
-  const isLoading = useSelector(getContactsIsLoading);
+  const { isLoading } = useGetContactsQuery();
+  const [deleteContact] = useDeleteContactMutation();
+  const [updateContact] = useUpdateContactMutation();
+  // const isLoading = useSelector(getContactsIsLoading);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const deletingId = useRef(null);
 
   const handleDeleteItem = () => {
     deletingId.current = id;
-    dispatch(deleteContact(id));
+    deleteContact(id);
   }
 
   const toggleModal = () => {
@@ -27,7 +27,7 @@ const ContactItem = ({ id, name, number }) => {
 
   const handleSubmit = (item) => {
     if (item.name !== name || item.number !== number) {
-      dispatch(editContact({ ...item, id }));
+      updateContact({ ...item, id });
     }
     setIsModalOpen(false);
   }

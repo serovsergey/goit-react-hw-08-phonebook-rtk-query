@@ -2,14 +2,16 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { Button, Paper, TextField, Typography } from '@mui/material';
+import { Button, Paper, TextField, Typography, CircularProgress } from '@mui/material';
 
 import s from './registerPage.module.scss';
-import { useDispatch } from 'react-redux';
-import authOperations from 'redux/auth/operations.auth';
 import { toast } from 'react-toastify';
+import { useSignupMutation } from 'services/contacts.api';
+import { setCredentials } from 'redux/auth/auth.slice';
+import { useDispatch } from 'react-redux';
 
 const RegisterPage = () => {
+  const [signup, { isLoading }] = useSignupMutation();
   const dispatch = useDispatch();
 
   const validationSchema = yup.object({
@@ -34,9 +36,14 @@ const RegisterPage = () => {
     },
     validationSchema,
     onSubmit: values => {
-      dispatch(authOperations.register(values)).unwrap()
-        .then(() => toast.info('You have registered!'))
-        .catch((error) => toast.error(`Failed to register with error: \n${error.message}`));
+
+      signup(values).unwrap()
+        .then((user) => {
+          console.log(user)
+          dispatch(setCredentials(user));
+          toast.info('You have registered!')
+        })
+        .catch((error) => toast.error(`Failed to register with error: \n${JSON.stringify(error)}`))
     },
   });
 
@@ -77,8 +84,8 @@ const RegisterPage = () => {
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
         />
-        <Button color="primary" variant="contained" type="submit">
-          Register
+        <Button color="primary" variant="contained" type="submit" disabled={isLoading}>
+          Register &nbsp; {isLoading && <CircularProgress size={24} />}
         </Button>
       </form>
     </Paper>

@@ -4,17 +4,15 @@ import ContactList from 'components/ContactList';
 import { Button, Paper } from '@mui/material';
 import Modal from '../../components/shared/Modal';
 import ContactForm from 'components/ContactForm';
-import { useDispatch, useSelector } from 'react-redux';
-import { getContactsItems } from 'redux/contactsSlice/selector.contacts';
-import { addContact } from 'redux/contactsSlice/operations.contacts';
 import Filter from 'components/Filter';
+import { useAddContactMutation, useGetContactsQuery } from 'services/contacts.api';
 
 // import s from './contactsPage.module.scss';
 
 const ContactsPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const items = useSelector(getContactsItems);
-  const dispatch = useDispatch();
+  const [addContact] = useAddContactMutation();
+  const { data: items } = useGetContactsQuery();
 
   const toggleModal = () => {
     setIsModalOpen(state => !state);
@@ -26,7 +24,7 @@ const ContactsPage = () => {
       alert(`${name} is already in contacts.`);
       return;
     }
-    dispatch(addContact({ name, number }));
+    addContact({ name, number });
     setIsModalOpen(false);
   }
 

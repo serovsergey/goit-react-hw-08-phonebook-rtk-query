@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Container } from '@mui/material';
 import AuthNav from 'components/AuthNav/AuthNav';
 import UserMenu from 'components/UserMenu';
 import React, { Suspense } from 'react';
@@ -16,12 +16,10 @@ const SharedLayoutPage = () => {
     <Container maxWidth="md">
       {/* <div className={s.container}> */}
       <header className={s.header}>
-        <Box className={s.logo}>
-          <Link to="/">
-            <AppLogo className={s.logoImg} />
-          </Link>
-          <Typography variant='h4'>PhoneBook</Typography>
-        </Box>
+        <Link className={s.logo} to="/">
+          <AppLogo className={s.logoImg} />
+          <span variant='h1' className={s.link}>PhoneBook</span>
+        </Link>
         {isLoggedIn ? <UserMenu /> : <AuthNav />}
       </header>
       <Suspense fallback={null}>

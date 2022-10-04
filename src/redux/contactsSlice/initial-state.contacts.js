@@ -1,5 +1,5 @@
-export const initialContacts = {
-  items: [],
-  error: null,
-  isLoading: false,
-};
+// export const initialContacts = {
+//   items: [],
+//   error: null,
+//   isLoading: false,
+// };

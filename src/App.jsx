@@ -4,8 +4,10 @@ import SharedLayout from "pages/SharedLayoutPage";
 import { lazy, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
-import authOperations from "redux/auth/operations.auth";
+import { setUserInfo } from "redux/auth/auth.slice";
 import authSelectors from "redux/auth/selector.auth";
+// import authOperations from "redux/auth/operations.auth";
+import { useGetCurrentUserQuery } from "services/contacts.api";
 
 const Home = lazy(() => import('./pages/HomePage'));
 const Contacts = lazy(() => import('./pages/ContactsPage'));
@@ -14,14 +16,20 @@ const Login = lazy(() => import('./pages/LoginPage'));
 
 // TODO Abort
 export const App = () => {
-  const isFetchingCurrentUser = useSelector(authSelectors.getIsFetchingCurrentUser);
+  const username = useSelector(authSelectors.getUserName);
+  const token = useSelector(authSelectors.getToken);
+  const { data, isLoading } = useGetCurrentUserQuery(null, { skip: !token || username });
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(authOperations.getCurrentUser());
-  }, [dispatch])
+    if (data) {
+      dispatch(setUserInfo(data));
+    }
+  }, [data, dispatch])
+
   return (
     <>
-      {!isFetchingCurrentUser && (
+      {!isLoading && (
         <Routes>
           <Route path='/' element={<SharedLayout />} >
             {/* <Route path='/' element={<PublicRoute />}> */}
@@ -31,11 +39,9 @@ export const App = () => {
             <Route path='/contacts' element={<PrivateRoute />} >
               <Route path='' element={<Contacts />} />
             </Route>
-            <Route path='/register' element={<PublicRoute restricted />}>
-              <Route path='' element={<Register />} />
-            </Route>
-            <Route path='/login' element={<PublicRoute restricted />}>
-              <Route path='' element={<Login />} />
+            <Route path='/' element={<PublicRoute restricted />}>
+              <Route path='register' element={<Register />} />
+              <Route path='login' element={<Login />} />
             </Route>
             <Route path="*" element={<Navigate to="/" />} />
           </Route>

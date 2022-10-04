@@ -1,23 +1,16 @@
-import { useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useMemo } from 'react';
+import { useSelector } from "react-redux";
 // import PropTypes from 'prop-types'
 import s from './ContactList.module.scss'
-import { getContactsError, getContactsIsLoading, getContactsItems } from 'redux/contactsSlice/selector.contacts';
 import { getFilter } from 'redux/filterReducer/selector.filter';
-import { fetchAllContacts } from 'redux/contactsSlice/operations.contacts';
 import ContactItem from 'components/ContactItem';
 import { Box, LinearProgress, Typography } from '@mui/material';
+import { useGetContactsQuery } from 'services/contacts.api';
 
 export const ContactList = () => {
-  const items = useSelector(getContactsItems);
-  const isLoading = useSelector(getContactsIsLoading);
-  const error = useSelector(getContactsError);
+  const query = useGetContactsQuery();
+  const { data: items = [], isFetching, error } = query;
   const filter = useSelector(getFilter);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchAllContacts());
-  }, [dispatch])
 
   const filteredContacts = useMemo(() => {
     const normalizedFilter = filter.toLowerCase();
@@ -34,10 +27,9 @@ export const ContactList = () => {
         }
       }, {});
   }, [items, filter]);
-
   return (
     <>
-      {isLoading && <LinearProgress />}
+      {isFetching && <LinearProgress />}
       <Box sx={{
         columnWidth: "16em",
       }}>
@@ -53,7 +45,7 @@ export const ContactList = () => {
             </Box>
           ))}
         </div >
-        {!isLoading && error && <p>{error}</p>}
+        {!isFetching && error && <p>{error.message}</p>}
       </Box >
     </>
   )
