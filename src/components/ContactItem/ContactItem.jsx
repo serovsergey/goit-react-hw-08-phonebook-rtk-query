@@ -43,9 +43,9 @@ const ContactItem = ({ id, name, number }) => {
       }}>
         <div>
           <div className={s.name}>{name}</div>
-          <div className={s.number}>{number}</div>
+          <a href={'tel:' + number} className={s.number}>{number}</a>
         </div>
-        <div>
+        <div className={s.btnContainer}>
           <IconButton onClick={toggleModal} aria-label="edit"><EditIcon /></IconButton >
           <IconButton onClick={handleDeleteItem} aria-label="delete" disabled={isDeleting}>{isDeleting ? <CircularProgress size={24} /> : <DeleteForeverIcon />}</IconButton >
         </div>
