@@ -1,16 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { initialState } from "./initial-state.auth";
-// import authOperations from "./operations.auth";
-
-// const setPending = state => {
-//   state.isLoading = true;
-//   state.error = null;
-// }
-
-// const setError = (state, { payload }) => {
-//   state.isLoading = false;
-//   state.error = payload;
-// }
 
 const authSlice = createSlice({
   name: 'auth',

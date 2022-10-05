@@ -7,7 +7,7 @@ export const contactsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://connections-api.herokuapp.com',
     prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token
+      const token = getState().auth.token;
       if (token) {
         headers.set('authorization', `Bearer ${token}`)
       }
@@ -17,8 +17,7 @@ export const contactsApi = createApi({
   endpoints: (builder) => ({
     getCurrentUser: builder.query({
       query: () => '/users/current',
-      // providesTags: ['Auth'],
-
+      providesTags: ['Auth'],
     }),
     signup: builder.mutation({
       query: (credentials) => ({
